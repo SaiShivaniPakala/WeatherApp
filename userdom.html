@@ -1,0 +1,73 @@
+<html>
+<body bgcolor="cyan">
+<script type="text/javascript">
+function loadXMLDoc(docname)
+{
+if(window.XMLHttpRequest)
+{
+xhttp = new XMLHttpRequest();
+}
+else{
+xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+xhttp.open("GET", docname, false);
+xhttp.send();
+return xhttp.responseXML;
+}
+
+function dot()
+{
+var val = document.sort.search_text.value;
+try
+{
+o = loadXMLDoc("staff.xml");
+y = o.getElementsByTagName("staff");
+document.write("<table border = 1 align = center bgcolor = lightblue cellpadding = 15%><tr>");
+document.write("<th>StaffID</th><th>firstname</th><th>lastname</th><th>nickname</th><th>salary</th></tr>");
+sid=new Array(10);
+firstname = new Array(20);
+var xy = 0;
+lastname = new Array(20);
+nickname = new Array(20);
+salary = new Array(20);
+document.write("<center><h1>User Details</h1></center>");
+for(i = 0; i < y.length; i++)
+{
+sid[i]=o.getElementsByTagName("sid")[i].childNodes[0].nodeValue;
+firstname[i] = o.getElementsByTagName("firstname")[i].childNodes[0].nodeValue;
+lastname[i]=o.getElementsByTagName("lastname")[i].childNodes[0].nodeValue;
+nickname[i] = o.getElementsByTagName("nickname")[i].childNodes[0].nodeValue;
+salary[i] = o.getElementsByTagName("salary")[i].childNodes[0].nodeValue;
+if(sid[i]==val || firstname[i] == val || lastname[i] == val || nickname[i] == val || salary[i] == val)
+{
+xy=xy+1;
+document.write("<tr>");
+document.write("<td>"+sid[i]+"</td><td>");
+document.write(firstname[i]+"</td><td>");
+document.write(lastname[i]+"</td><td>");
+document.write(nickname[i]+"</td><td>");
+document.write(salary[i]+"</td>");
+document.write("</tr>");
+}
+}
+if(xy == 0)
+{
+document.write("<h1>search not found</h1>");
+}
+document.write("</table>");
+}
+catch(e)
+{
+alert(e.message);
+}
+}
+</script>
+<center>
+<h1>User Details</h1>
+<form name="sort" action="" method="post" onsubmit="return dot()">
+<input type="textbox" name="search_text" placeholder="Enter User ID" ><br />
+<input type="submit" name="submit" value="search" >
+</form>
+</center>
+</body>
+</html>
